@@ -43,7 +43,7 @@ class Main {
     public static void main (String args[]) {
     	
     	Main myWork = new Main();  
-        myWork.begin_04();                    
+        myWork.begin_05();                    
     }
     
     
@@ -204,68 +204,102 @@ class Main {
     	}
     }
     
-    
     public void begin_04() {
 
-    	
+    	// Sieve of Eratosthenes
+    	// http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
     	long start = System.nanoTime();
-    	primeNumbersList.add(2);
+    	initializePrimes();
     	generatePrimes_04(2, 11);
     	System.out.println();
-    	//generatePrimes_04(89867, 89963);
+    	generatePrimes_04(89867, 89963);
     	System.out.println();
-    	//generatePrimes_04(89867, 89963);
+    	generatePrimes_04(89867, 89963);
     	System.out.println();
-    	//generatePrimes_04(2, 11);
+    	generatePrimes_04(2, 11);
     	System.out.println();
-    	//generatePrimes_04(89867, 89963);
+    	generatePrimes_04(89867, 89963);
     	System.out.println();
-    	//generatePrimes_04(89867, 89963);
+    	generatePrimes_04(89867, 89963);
     	System.out.println();
+    	//generatePrimes_02(89867, 899630);
     	
     	System.out.println("elipsed time: " + (System.nanoTime() - start) );	// 2821728
     	
     }
     
-    List<Integer> primeNumbersList = new ArrayList<Integer>(1000);
-    void initializePrimes_04(){
-    	for( int integer= 2 ; integer < 1000000001 ; integer++ ){
-    		boolean isPrime = true;
-    		if( !primeNumbersList.contains(integer)){
-    			int check = 2;
-        		int maxCheck = integer;
-        		while(integer>2 && check < maxCheck){
-        			if(integer%check == 0){
-        				isPrime = false;
-        				break;
-        			}else{
-        				maxCheck= integer/check++;
-        			}
-        		}
-        		if(isPrime) primeNumbersList.add(integer);
+    Set<Integer> nonePrimeNumbers = new HashSet<Integer>(500,500);
+    void initializePrimes(){
+    	nonePrimeNumbers.add(1);
+    	for( int integer = 2; integer < 1000000001 ; integer++ ){
+    		System.out.println("integer: " + integer);
+    		if(!nonePrimeNumbers.contains(integer)){
+    			int currentMutiplyNumber = integer;
+    			int currentMutipliedNumber = integer*currentMutiplyNumber;
+    			while(currentMutipliedNumber<1000000000){
+    				nonePrimeNumbers.add(currentMutipliedNumber);
+    				System.out.println("    - currentMutipliedNumber: " + currentMutipliedNumber);
+    				currentMutipliedNumber = integer*++currentMutiplyNumber;
+    			}
     		}
-    		
-    		
-    		if(isPrime){
+    	}
+    	
+    }
+    
+    
+    void generatePrimes_04(int min, int max){
+    	for( int integer= min ; integer < max+1 ; integer++ ){
+    		if(!nonePrimeNumbers.contains(integer)){
     			System.out.println(integer );
     		}
     	}
     }
-    void generatePrimes_04(int min, int max){
+ 
+    
+    public void begin_05() {
+
+    	long start = System.nanoTime();
+    	generatePrimes_05(2, 11);
+    	System.out.println();
+    	generatePrimes_05(89867, 89963);
+    	System.out.println();
+    	generatePrimes_05(89867, 89963);
+    	System.out.println();
+    	generatePrimes_05(2, 11);
+    	System.out.println();
+    	generatePrimes_05(89867, 89963);
+    	System.out.println();
+    	generatePrimes_05(89867, 89963);
+    	System.out.println();
+    	//generatePrimes_02(89867, 899630);
+    	
+    	System.out.println("elipsed time: " + (System.nanoTime() - start) );	// 5218448
+    	
+    }
+    
+    Set<Integer> primeNumbersSet = new HashSet<Integer>(500,500);
+    Set<Integer> nonePrimeNumbersSet = new HashSet<Integer>(500,500);
+    void generatePrimes_05(int min, int max){
     	for( int integer= min<2?2:min ; integer < max+1 ; integer++ ){
     		boolean isPrime = true;
-    		if( !primeNumbersList.contains(integer)){
-    			int check = 2;
-        		int maxCheck = integer;
-        		while(integer>2 && check < maxCheck){
-        			if(integer%check == 0){
-        				isPrime = false;
-        				break;
-        			}else{
-        				maxCheck= integer/check++;
-        			}
-        		}
-        		if(isPrime) primeNumbersList.add(integer);
+    		if( !primeNumbersSet.contains(integer)){
+    			if( nonePrimeNumbersSet.contains(integer)){
+    				isPrime = false;
+    			}else{
+    				int check = 2;
+            		int maxCheck = integer;
+            		while(integer>2 && check < maxCheck){
+            			if(integer%check == 0){
+            				isPrime = false;
+            				break;
+            			}else{
+            				maxCheck= integer/check++;
+            			}
+            		}
+            		if(!isPrime) nonePrimeNumbersSet.add(integer);
+    			}
+    			
+        		if(isPrime) primeNumbersSet.add(integer);
     		}
     		
     		
