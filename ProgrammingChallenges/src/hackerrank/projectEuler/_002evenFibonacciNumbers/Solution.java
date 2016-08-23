@@ -1,4 +1,4 @@
-package hackerrank.proejctEuler._002evenFibonacciNumbers;
+package hackerrank.projectEuler._002evenFibonacciNumbers;
 
 import java.util.Scanner;
 
